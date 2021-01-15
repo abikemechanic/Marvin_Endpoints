@@ -4,7 +4,7 @@
 #include <PubSubClient.h>
 #include <LittleFS.h>
 #include <ArduinoJson.h>
-#include <Dictionary.h>
+// #include <Dictionary.h>
 
 #include "SpaceHeater.h"
 

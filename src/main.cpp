@@ -10,7 +10,6 @@
 
 #define WLAN_SSID   "JackInTheBox"
 #define WLAN_PASS   "SofiaSoup2015"
-#define LED_BUILTIN   2
 #define ID_PREFIX     "relay_box"
 
 WiFiClient espClient;

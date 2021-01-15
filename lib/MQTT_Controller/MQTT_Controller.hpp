@@ -4,9 +4,14 @@
 #include <Arduino.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
-#include <Dictionary.h>
 
 #include "SpaceHeater.h"
+
+struct module_subscription
+{
+    char* topic;
+    char* module_id;
+};
 
 
 class MQTT_Controller
@@ -20,11 +25,9 @@ public:
 
 private:
     PubSubClient _client;
-    Dictionary topic_callbacks;
+    module_subscription _subs[];
 
     SpaceHeater _create_space_heater(JsonObject dict);
 };
-
-
 
 #endif

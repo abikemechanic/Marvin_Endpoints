@@ -9,7 +9,7 @@
 class SpaceHeater
 {
 public:
-    SpaceHeater(JsonObject config);
+    SpaceHeater(JsonObject config, PubSubClient client);
 
     void callback(char* topic, char* payload, unsigned int length);
 
@@ -23,10 +23,12 @@ public:
     int minTemp;
     int maxRunTime;
     int minOffTime;
+    char subscriptions[];
 
 private:
     bool localMonitor = true;
     int _controlPin;
+    PubSubClient _client;
 };
 
 #endif
