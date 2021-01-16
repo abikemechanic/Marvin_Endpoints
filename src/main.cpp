@@ -14,7 +14,7 @@
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
-MQTT_Controller mqtt_controller(mqttClient);
+MQTT_Controller mqtt_controller(espClient);
 
 #define MQTT_SERVER     "192.168.1.2"
 #define MQTT_PORT       "1883"
@@ -68,6 +68,8 @@ void setup() {
   Serial.begin(9600);
   Serial.println();
 
+  connect_wifi();
+  
   mqtt_controller.read_config();
 }
 
