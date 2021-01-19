@@ -6,16 +6,7 @@
 
 SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
 {
-    Serial.println("creating heater object");  
-
-    // for (JsonObject::iterator it=config.begin(); it!=config.end(); ++it)
-    // {
-    //     const char* m = it->key().c_str();
-    //     Serial.print(m);
-    //     Serial.print(": ");
-    //     const char* n = config[m].as<char*>();
-    //     Serial.println(n);
-    // }
+    Serial.println("creating heater object");
     _controlPin = config["controlPin"];
     maxTemp = config["maxTemp"];
     minTemp = config["minTemp"];
@@ -24,11 +15,27 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
 
     Serial.print("control pin: ");
     Serial.println(_controlPin);
-
     // works
     
     // _client = client;
     // throws error...
+
+    const JsonArray& first_pub = config["publish"];
+    // char pub_topics[][200];
+    // Serial.println(first_pub[0].as<char*>());
+    // works
+
+    for (int i = 0; i < 5; i++)
+    {
+        Serial.print("i = ");
+        Serial.println(i);
+        // const JsonObject& t = first_pub[i];
+        // if (t.success()) {}
+        const char* top = first_pub[i].as<char*>();
+        // pub_topics[i] = top;
+        Serial.println(top);
+    }
+
 
     // subscriptions
     // publishes
