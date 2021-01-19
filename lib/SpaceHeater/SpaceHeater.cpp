@@ -12,33 +12,42 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
     minTemp = config["minTemp"];
     maxRunTime = config["maxRunTime"];
     minOffTime = config["minRunTime"];
-
-    Serial.print("control pin: ");
-    Serial.println(_controlPin);
-    // works
     
     // _client = client;
     // throws error...
 
     const JsonArray& first_pub = config["publish"];
-    // char pub_topics[][200];
-    // Serial.println(first_pub[0].as<char*>());
-    // works
-
-    for (int i = 0; i < 5; i++)
+    bool cont = true;
+    int i = 0;
+    Serial.println("publications");
+    while (cont)
     {
-        Serial.print("i = ");
-        Serial.println(i);
-        // const JsonObject& t = first_pub[i];
-        // if (t.success()) {}
-        const char* top = first_pub[i].as<char*>();
-        // pub_topics[i] = top;
-        Serial.println(top);
+        const char* t = first_pub[i].as<char*>();
+        if (!strcmp("", t))
+        {
+            strcpy(publications[i], t);
+            Serial.println(t);
+            i++;
+        }
+        else{ cont = false; }
     }
 
-
-    // subscriptions
-    // publishes
+    const JsonArray& subs = config["subscriptions"];
+    cont = true;
+    i = 0;
+    Serial.println("Subscriptions");
+    while (cont)
+    {
+        const char* t = subs[i].as<char*>();
+        if (!strcmp("", t))
+        {
+            strcpy(subscriptions[i], t);
+            Serial.println(t);
+            i++;
+        }
+        else { cont = false; }
+    }
+    strcpy(subscriptions[i], config["temperature_sub_topic"]);
 }
 
 void SpaceHeater::callback(char* topic, char* payload, unsigned int length)

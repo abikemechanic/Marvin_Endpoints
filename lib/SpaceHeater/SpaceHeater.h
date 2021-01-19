@@ -23,11 +23,13 @@ public:
     int minTemp;
     int maxRunTime;
     int minOffTime;
-    char subscriptions[];
+    char subscriptions[][200];
+    char publications[][200];
 
 private:
     bool localMonitor = true;
     int _controlPin;
+    float historical_temps[10];
     PubSubClient _client;
 };
 
