@@ -25,6 +25,8 @@ public:
     int minOffTime;
     char subscriptions[][200];
     char publications[][200];
+    int _subCount;
+    int _pubCount;
 
 private:
     bool localMonitor = true;

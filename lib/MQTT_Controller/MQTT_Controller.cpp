@@ -77,10 +77,11 @@ void MQTT_Controller::read_config()
 
 SpaceHeater MQTT_Controller::_create_space_heater(JsonObject dict)
 {
-    // const char* m = dict["controlPin"];
-    // Serial.println(m);
-
     SpaceHeater sp(dict, _client);
+
+    Serial.print("number of subscriptions: ");
+    Serial.println(sp._subCount);
+
     return sp;       
 }
 

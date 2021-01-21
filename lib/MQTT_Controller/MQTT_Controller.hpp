@@ -13,6 +13,12 @@ struct module_subscription
     char* module_id;
 };
 
+struct module_publish
+{
+    char* topic;
+    char* message;
+};
+
 
 class MQTT_Controller
 {

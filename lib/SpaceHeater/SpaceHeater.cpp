@@ -18,37 +18,42 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
 
     const JsonArray& first_pub = config["publish"];
     bool cont = true;
-    int i = 0;
+    _pubCount = 0;
     Serial.println("publications");
     while (cont)
     {
-        const char* t = first_pub[i].as<char*>();
-        if (!strcmp("", t))
+        const char* t = first_pub[_pubCount].as<char*>();
+        if (strcmp("", t))
         {
-            strcpy(publications[i], t);
+            strcpy(publications[_pubCount], t);
             Serial.println(t);
-            i++;
+            _pubCount++;
+            delay(1000);
         }
         else{ cont = false; }
     }
 
-    const JsonArray& subs = config["subscriptions"];
+    const JsonArray& subs = config["subscribe"];
     cont = true;
-    i = 0;
-    Serial.println("Subscriptions");
+    _subCount = 0;
+    Serial.println("subscriptions");
     while (cont)
     {
-        const char* t = subs[i].as<char*>();
+        const char* t = subs[_subCount].as<char*>();
         if (!strcmp("", t))
         {
-            strcpy(subscriptions[i], t);
+            strcpy(subscriptions[_subCount], t);
             Serial.println(t);
-            i++;
+            _subCount++;
         }
         else { cont = false; }
     }
-    strcpy(subscriptions[i], config["temperature_sub_topic"]);
+    strcpy(subscriptions[_subCount], config["temperature_sub_topic"]);
+
+    Serial.println("ending creation of heater module");
 }
+
+
 
 void SpaceHeater::callback(char* topic, char* payload, unsigned int length)
 {
