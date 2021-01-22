@@ -4,7 +4,8 @@
 #include <PubSubClient.h>
 #include <LittleFS.h>
 #include <ArduinoJson.h>
-// #include <Dictionary.h>
+#include <PubStruct.h>
+#include <SubStruct.h>
 
 #include "SpaceHeater.h"
 
@@ -77,7 +78,7 @@ void MQTT_Controller::read_config()
 
 SpaceHeater MQTT_Controller::_create_space_heater(JsonObject dict)
 {
-    SpaceHeater sp(dict, _client);
+    SpaceHeater sp(dict, &_client);
 
     Serial.print("number of subscriptions: ");
     Serial.println(sp._subCount);

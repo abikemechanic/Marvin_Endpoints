@@ -5,19 +5,9 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
+#include <PubStruct.h>
+#include <SubStruct.h>
 #include "SpaceHeater.h"
-
-struct module_subscription
-{
-    char* topic;
-    char* module_id;
-};
-
-struct module_publish
-{
-    char* topic;
-    char* message;
-};
 
 
 class MQTT_Controller
@@ -26,12 +16,14 @@ public:
     MQTT_Controller(PubSubClient client);
     void recv_message(char* topic, char* payload, unsigned int length);
     void read_config();
+    void publish_message(PubStruct message_data);
 
     bool config_success = false;
 
 private:
     PubSubClient _client;
-    module_subscription _subs[];
+    SubStruct _subs[];
+    int _subCount = 0;
 
     SpaceHeater _create_space_heater(JsonObject dict);
 };

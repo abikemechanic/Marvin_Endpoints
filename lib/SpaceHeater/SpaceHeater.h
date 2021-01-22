@@ -9,9 +9,10 @@
 class SpaceHeater
 {
 public:
-    SpaceHeater(JsonObject config, PubSubClient client);
+    SpaceHeater(JsonObject config, PubSubClient* client);
 
     void callback(char* topic, char* payload, unsigned int length);
+    void publish_message(char* topic, char* message);
 
     bool setLocalMonitor(bool localMonitor);
     int setMaxTemp(int temp);
@@ -23,8 +24,9 @@ public:
     int minTemp;
     int maxRunTime;
     int minOffTime;
-    char subscriptions[][200];
-    char publications[][200];
+    char* module_id;
+    SubStruct subscriptions[20];
+    char publications[20][200];
     int _subCount;
     int _pubCount;
 
@@ -32,7 +34,9 @@ private:
     bool localMonitor = true;
     int _controlPin;
     float historical_temps[10];
-    PubSubClient _client;
+
+    int publish_callback;
+    PubSubClient* _client;
 };
 
 #endif

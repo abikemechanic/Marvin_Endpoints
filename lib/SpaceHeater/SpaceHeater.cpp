@@ -4,6 +4,9 @@
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 
+#include <PubStruct.h>
+#include <SubStruct.h>
+
 SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
 {
     Serial.println("creating heater object");
@@ -12,6 +15,7 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
     minTemp = config["minTemp"];
     maxRunTime = config["maxRunTime"];
     minOffTime = config["minRunTime"];
+    module_id = config["id"];
     
     // _client = client;
     // throws error...
@@ -42,13 +46,23 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient client)
         const char* t = subs[_subCount].as<char*>();
         if (!strcmp("", t))
         {
-            strcpy(subscriptions[_subCount], t);
+            SubStruct s;
+            strcpy(s.topic, t);
+            s.sub_module = module_id;
+
+            // strcpy(subscriptions[_subCount], t);
             Serial.println(t);
+            subscriptions[_subCount] = s;
             _subCount++;
         }
         else { cont = false; }
     }
-    strcpy(subscriptions[_subCount], config["temperature_sub_topic"]);
+
+    SubStruct s;
+    s.topic = config["temperature_sub_topic"];
+    s.sub_module = module_id;
+    subscriptions[_subCount] = s;
+    // strcpy(subscriptions[_subCount], config["temperature_sub_topic"]);
 
     Serial.println("ending creation of heater module");
 }
