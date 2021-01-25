@@ -5,6 +5,9 @@
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
 
+#include <SubStruct.h>
+#include <PubStruct.h>
+
 
 class SpaceHeater
 {
@@ -13,6 +16,8 @@ public:
 
     void callback(char* topic, char* payload, unsigned int length);
     void publish_message(char* topic, char* message);
+    static void publish_message();
+    void check_module();
 
     bool setLocalMonitor(bool localMonitor);
     int setMaxTemp(int temp);
@@ -24,16 +29,17 @@ public:
     int minTemp;
     int maxRunTime;
     int minOffTime;
-    char* module_id;
+    const char* moduleID;
     SubStruct subscriptions[20];
     char publications[20][200];
-    int _subCount;
-    int _pubCount;
+    unsigned int _subCount;
+    unsigned int _pubCount;
 
 private:
     bool localMonitor = true;
     int _controlPin;
-    float historical_temps[10];
+    float historicalTemps[10];
+    unsigned long _lastUpdateTime = 0;
 
     int publish_callback;
     PubSubClient* _client;

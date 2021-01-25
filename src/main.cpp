@@ -74,5 +74,5 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  mqtt_controller.mqtt_check();
 }

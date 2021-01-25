@@ -48,30 +48,25 @@ void MQTT_Controller::read_config()
     }    
     f.close();
 
-    JsonObject obj = doc["modules"].as<JsonObject>();
-    for (JsonObject::iterator it=obj.begin(); it!=obj.end(); ++it)
-    {
-        const char* mod = it->key().c_str();
-        Serial.print("module: ");
-        Serial.println(mod);
+    topicRoot = doc["topic_root"];
+    clientID = doc["client_id"];
+    _serverIP = doc["server_ip"];
+    _serverPort = doc["server_port"];
 
-        if (!strcmp(mod, "heater"))
+    const JsonArray& modules = doc["modules"];
+    unsigned int module_count;
+    for (module_count = 0; module_count < modules.size(); module_count++)
+    {
+        const JsonObject& m = modules[module_count];
+        const char* m_type = m["module_type"];
+        const char* m_id = m["id"];
+
+        if (!strcmp(m_type, "heater"))
         {
-            Serial.println("module is heater");
-            JsonObject m = obj["heater"];
-            _create_space_heater(m);
+            SpaceHeater mod = _create_space_heater(m);
         }
-        else if (!strcmp(mod, "led_light"))
+        else if (!strcmp(m_type, "led_light"))
         {
-            Serial.println("create module for led_light");
-        }
-        else if(!strcmp(mod, "exhaust_fan"))
-        {
-            Serial.println("create module for exhaust_fan");
-        }
-        else if (!strcmp(mod, "circulating_fan"))
-        {
-            Serial.println("create module for circulating_fan");
         }
     }
 }
@@ -83,7 +78,43 @@ SpaceHeater MQTT_Controller::_create_space_heater(JsonObject dict)
     Serial.print("number of subscriptions: ");
     Serial.println(sp._subCount);
 
+    add_update_function(sp.publish_message);
+
     return sp;       
+}
+
+void MQTT_Controller::reconnect()
+{
+    while (!_client.connected())
+    {
+        String id = clientID;
+        id += String(random(0xffff), HEX);
+        Serial.println(clientID);
+        Serial.println(id);
+
+        if (_client.connect(id.c_str()))
+        {
+        Serial.println("mqtt connected");
+        }
+        else
+        {
+        Serial.println("failed mqtt connection");
+        delay(1000);
+        }
+    }
+}
+
+void MQTT_Controller::mqtt_check()
+{
+    if (!_client.loop())
+    {
+        reconnect();
+    }
+}
+
+void MQTT_Controller::add_update_function(void (*update_func)())
+{
+    update_func();
 }
 
 

@@ -3,8 +3,8 @@
 
 struct SubStruct
 {
-    char* topic;
-    char* sub_module;
+    const char* topic;
+    const char* subModule;
 };
 
 #endif

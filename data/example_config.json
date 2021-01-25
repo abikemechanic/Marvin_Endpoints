@@ -1,0 +1,55 @@
+{
+"modules": [
+    {
+    "id_1": 
+        {
+            "module_type": "heater",
+            "controlPin": 9,
+            "maxTemp": 82,
+            "minTemp": 75,
+            "maxRunTime": 300,
+            "minOffTime": 30,
+            "temperature_sub_topic": "test_topic",
+            "update_frequency": 5,
+            "subscribe":[
+                "set_state"
+            ],
+            "publish":
+            [
+                "current_state",
+                "on_time",
+                "off_time"
+            ]
+        }
+    },
+    {
+    "id_2":
+        {
+            "module_type": "exhaust_fan",
+            "control_pin": 8,
+            "run_time": 43200,
+            "on_time": "5:00:00"
+        }
+    },
+    {
+    "id_3":
+        {
+            "module_type": "led_light",
+            "control_pin": 7,
+            "max_temp": 80,
+            "min_temp": 75,
+            "min_off_time": 60
+        }
+    },
+    {
+    "id_4":
+        {
+            "control_pin": 6
+        }
+    }
+],
+"topic_root": "sub_topic_for_module",
+"client_id": "mqtt_client_id",
+"server_ip": "ip_address_of_server",
+"server_port": 1883
+}
