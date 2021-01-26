@@ -15,7 +15,7 @@ public:
     SpaceHeater(JsonObject config, PubSubClient* client);
 
     void callback(char* topic, char* payload, unsigned int length);
-    void publish_message(char* topic, char* message);
+    // void publish_message(char* topic, char* message);
     static void publish_message();
     void check_module();
 

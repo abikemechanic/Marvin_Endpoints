@@ -78,7 +78,8 @@ SpaceHeater MQTT_Controller::_create_space_heater(JsonObject dict)
     Serial.print("number of subscriptions: ");
     Serial.println(sp._subCount);
 
-    add_update_function(sp.publish_message);
+    void (*updateFncPtr)() = sp.publish_message;
+    add_update_function(updateFncPtr);
 
     return sp;       
 }
@@ -112,9 +113,9 @@ void MQTT_Controller::mqtt_check()
     }
 }
 
-void MQTT_Controller::add_update_function(void (*update_func)())
+void MQTT_Controller::add_update_function(void (*updateFunc)())
 {
-    update_func();
+    updateFunc();
 }
 
 

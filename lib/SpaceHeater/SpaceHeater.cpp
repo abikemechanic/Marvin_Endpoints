@@ -46,7 +46,7 @@ void SpaceHeater::check_module()
 {
     if (millis() > _lastUpdateTime)
     {
-        publish_message("t", "s");
+        // publish_message("t", "s");
         // t and s not important now
     }
 }
@@ -55,11 +55,6 @@ void SpaceHeater::check_module()
 void SpaceHeater::callback(char* topic, char* payload, unsigned int length)
 {
 
-}
-
-void SpaceHeater::publish_message(char* topic, char* message)
-{
-    _client->publish("test_topic", "from space heater module");    
 }
 
 void SpaceHeater::publish_message()
