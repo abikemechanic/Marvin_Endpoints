@@ -7,6 +7,7 @@
 
 #include <PubStruct.h>
 #include <SubStruct.h>
+#include <Module.h>
 #include "SpaceHeater.h"
 
 
