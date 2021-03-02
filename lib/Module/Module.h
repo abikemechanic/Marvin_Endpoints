@@ -12,12 +12,13 @@
 class Module
 {
     public:
-        Module(JsonObject config, PubSubClient* client);
+        // Module(JsonObject config, PubSubClient* client);
+        // Module();
 
         void callback(char* topic, char* payload, unsigned int length);
-        void build_config(JsonObject config);
-        static void publish_message();
-        void update();
+        void build_config(JsonObject config) { Serial.println("not an implementation"); }
+        static void publish_message() { Serial.println("Not an implementation");}
+        void update() { Serial.println("not an implementation"); }
 
     private:
 };

@@ -7,9 +7,10 @@
 
 #include <SubStruct.h>
 #include <PubStruct.h>
+#include <Module.h>
 
 
-class SpaceHeater
+class SpaceHeater: public Module
 {
 public:
     SpaceHeater(JsonObject config, PubSubClient* client);
