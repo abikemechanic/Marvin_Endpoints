@@ -61,3 +61,8 @@ void SpaceHeater::publish_message()
 {
     Serial.println("pointer func in SpaceHeater");
 }
+
+void SpaceHeater::update()
+{
+    Serial.println("test update");
+}

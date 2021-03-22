@@ -37,6 +37,12 @@ private:
     const char* _serverIP;
     int _serverPort;
 
+    // array of function pointers to module update functions
+    void (Module::*updates[50])();
+
+    // array of modules
+    Module *mqtt_modules[50];
+
     SpaceHeater _create_space_heater(JsonObject dict);
 };
 

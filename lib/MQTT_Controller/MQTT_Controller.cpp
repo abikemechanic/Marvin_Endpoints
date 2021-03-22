@@ -64,6 +64,7 @@ void MQTT_Controller::read_config()
         if (!strcmp(m_type, "heater"))
         {
             SpaceHeater mod = _create_space_heater(m);
+            mqtt_modules[module_count] = &mod;
         }
         else if (!strcmp(m_type, "led_light"))
         {

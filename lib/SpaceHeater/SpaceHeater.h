@@ -19,6 +19,7 @@ public:
     // void publish_message(char* topic, char* message);
     static void publish_message();
     void check_module();
+    void update();
 
     bool setLocalMonitor(bool localMonitor);
     int setMaxTemp(int temp);

@@ -16,8 +16,6 @@ class Module
         void build_config(JsonObject config) { Serial.println("not an implementation"); }
         static void publish_message() { Serial.println("Not an implementation");}
         void update() { Serial.println("not an implementation"); }
-
-    private:
 };
 
 
