@@ -10,6 +10,8 @@
 #include <Module.h>
 #include "SpaceHeater.h"
 
+#define MAX_MODULE_COUNT 50
+
 
 class MQTT_Controller
 {
@@ -38,10 +40,10 @@ private:
     int _serverPort;
 
     // array of function pointers to module update functions
-    void (Module::*updates[50])();
+    void (Module::*updates[MAX_MODULE_COUNT])();
 
     // array of modules
-    Module *mqtt_modules[50];
+    Module *mqtt_modules[50]{nullptr};
 
     SpaceHeater _create_space_heater(JsonObject dict);
 };
