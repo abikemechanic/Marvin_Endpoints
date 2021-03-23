@@ -68,11 +68,14 @@ void setup() {
   Serial.begin(9600);
   Serial.println();
 
-  connect_wifi();
-  
+  // connect_wifi();
+
   mqtt_controller.read_config();
+  Serial.println("finished setup");
+  delay(500);
 }
 
 void loop() {
   mqtt_controller.mqtt_check();
+  delay(20);
 }

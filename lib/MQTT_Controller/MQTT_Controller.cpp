@@ -55,6 +55,8 @@ void MQTT_Controller::read_config()
 
     const JsonArray& modules = doc["modules"];
     unsigned int module_count;
+
+    Serial.println(modules.size());
     for (module_count = 0; module_count < modules.size(); module_count++)
     {
         const JsonObject& m = modules[module_count];
@@ -63,12 +65,14 @@ void MQTT_Controller::read_config()
 
         if (!strcmp(m_type, "heater"))
         {
-            SpaceHeater mod(m, _client);
+            SpaceHeater mod(m, &_client);
             mqtt_modules[module_count] = &mod;
         }
         else if (!strcmp(m_type, "led_light"))
         {
         }
+
+        Serial.println(module_count);
     }
 }
 
@@ -95,10 +99,10 @@ void MQTT_Controller::reconnect()
 
 void MQTT_Controller::mqtt_check()
 {
-    if (!_client.loop())
-    {
-        reconnect();
-    }
+    // if (!_client.loop())
+    // {
+    //     reconnect();
+    // }
 
     for (int i=0; i < MAX_MODULE_COUNT; i++)
     {

@@ -39,9 +39,6 @@ private:
     const char* _serverIP;
     int _serverPort;
 
-    // array of function pointers to module update functions
-    void (Module::*updates[MAX_MODULE_COUNT])();
-
     // array of modules
     Module *mqtt_modules[50]{nullptr};
 

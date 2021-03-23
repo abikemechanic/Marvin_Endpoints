@@ -16,6 +16,7 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient* client)
     maxRunTime = config["maxRunTime"];
     minOffTime = config["minRunTime"];
     moduleID = config["id"];
+    _update_frequency = config["update_frequency"];
     
     _client = client;
 
@@ -64,5 +65,10 @@ void SpaceHeater::publish_message()
 
 void SpaceHeater::update()
 {
-    Serial.println("test update");
+    if (millis() > _lastUpdateTime + _update_frequency)
+    {
+        Serial.print("Space Heater Update: ");
+        Serial.println(millis());
+        Serial.println('\n');
+    }
 }

@@ -42,6 +42,7 @@ private:
     int _controlPin;
     float historicalTemps[10];
     unsigned long _lastUpdateTime = 0;
+    unsigned long _update_frequency;
 
     int publish_callback;
     PubSubClient* _client;
