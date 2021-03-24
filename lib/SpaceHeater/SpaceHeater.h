@@ -32,10 +32,14 @@ public:
     int maxRunTime;
     int minOffTime;
     const char* moduleID;
+    const char* moduleType;
     SubStruct subscriptions[20];
     char publications[20][200];
     unsigned int _subCount;
     unsigned int _pubCount;
+
+    const char* module_type;
+    const char* module_id;
 
 private:
     bool localMonitor = true;

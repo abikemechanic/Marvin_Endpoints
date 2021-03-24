@@ -6,6 +6,7 @@
 #include <ArduinoJson.h>
 #include <PubStruct.h>
 #include <SubStruct.h>
+#include <ModuleStruct.h>
 
 #include "SpaceHeater.h"
 
@@ -66,7 +67,12 @@ void MQTT_Controller::read_config()
         if (!strcmp(m_type, "heater"))
         {
             SpaceHeater mod(m, &_client);
-            mqtt_modules[module_count] = &mod;
+            // mqtt_modules[module_count] = &mod;
+            ModuleStruct s;
+            s.moduleID = m_id;
+            s.mod = &mod;
+
+            module_array[module_count] = s;
         }
         else if (!strcmp(m_type, "led_light"))
         {
@@ -106,11 +112,16 @@ void MQTT_Controller::mqtt_check()
 
     for (int i=0; i < MAX_MODULE_COUNT; i++)
     {
-        if (mqtt_modules[i])
+        ModuleStruct s = module_array[i];
+        
+        if (s.moduleID != nullptr)
         {
-            mqtt_modules[i]->update();
+            // Serial.print("Module number: ");
+            // Serial.println(i);
+            // Serial.print("Module ID: ");
+            // Serial.println(s.moduleID);
+            s.mod->update();
         }
-
     }
 }
 

@@ -7,6 +7,7 @@
 
 #include <PubStruct.h>
 #include <SubStruct.h>
+#include <ModuleStruct.h>
 #include <Module.h>
 #include "SpaceHeater.h"
 
@@ -40,7 +41,9 @@ private:
     int _serverPort;
 
     // array of modules
-    Module *mqtt_modules[50]{nullptr};
+    Module *mqtt_modules[MAX_MODULE_COUNT]{nullptr};
+    ModuleStruct module_array[MAX_MODULE_COUNT];
+
 
     SpaceHeater _create_space_heater(JsonObject dict);
 };
