@@ -6,7 +6,8 @@
 struct ModuleStruct
 {
     const char* moduleID;
-    Module* mod;
+    const char* moduleType;
+    Module* mod = nullptr;
 };
 
 #endif

@@ -77,5 +77,4 @@ void setup() {
 
 void loop() {
   mqtt_controller.mqtt_check();
-  delay(20);
 }

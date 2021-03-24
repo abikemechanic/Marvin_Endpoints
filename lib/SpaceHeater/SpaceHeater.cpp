@@ -44,24 +44,9 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient* client)
     subscriptions[_subCount+1] = s;
 }
 
-void SpaceHeater::check_module()
-{
-    if (millis() > _lastUpdateTime)
-    {
-        // publish_message("t", "s");
-        // t and s not important now
-    }
-}
-
-
 void SpaceHeater::callback(char* topic, char* payload, unsigned int length)
 {
 
-}
-
-void SpaceHeater::publish_message()
-{
-    Serial.println("pointer func in SpaceHeater");
 }
 
 void SpaceHeater::update()
@@ -71,7 +56,12 @@ void SpaceHeater::update()
         Serial.print("Space Heater Update: ");
         Serial.println(millis());
         Serial.println('\n');
-        
+
         _lastUpdateTime = millis();
     }
+}
+
+void SpaceHeater::publish_message(char* topic, char* message)
+{
+    
 }

@@ -41,11 +41,7 @@ private:
     int _serverPort;
 
     // array of modules
-    Module *mqtt_modules[MAX_MODULE_COUNT]{nullptr};
     ModuleStruct module_array[MAX_MODULE_COUNT];
-
-
-    SpaceHeater _create_space_heater(JsonObject dict);
 };
 
 #endif

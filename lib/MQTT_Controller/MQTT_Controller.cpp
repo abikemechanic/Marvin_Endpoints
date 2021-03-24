@@ -67,9 +67,9 @@ void MQTT_Controller::read_config()
         if (!strcmp(m_type, "heater"))
         {
             SpaceHeater mod(m, &_client);
-            // mqtt_modules[module_count] = &mod;
             ModuleStruct s;
             s.moduleID = m_id;
+            s.moduleType = m_type;
             s.mod = &mod;
 
             module_array[module_count] = s;
@@ -114,24 +114,11 @@ void MQTT_Controller::mqtt_check()
     {
         ModuleStruct s = module_array[i];
         
-        if (s.moduleID != nullptr)
+        if (s.mod)
         {
-            // Serial.print("Module number: ");
-            // Serial.println(i);
-            // Serial.print("Module ID: ");
-            // Serial.println(s.moduleID);
             s.mod->update();
         }
     }
-}
-
-SpaceHeater MQTT_Controller::_create_space_heater(JsonObject dict)
-{
-    SpaceHeater sp(dict, &_client);
-
-    Serial.print("number of subscriptions: ");
-    Serial.println(sp._subCount);
-    return sp;       
 }
 
 
