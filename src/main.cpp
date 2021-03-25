@@ -8,9 +8,12 @@
 
 #include <MQTT_Controller.hpp>
 
-#define WLAN_SSID   "JackInTheBox"
-#define WLAN_PASS   "SofiaSoup2015"
+#define WLAN_SSID   "SSID Name"
+#define WLAN_PASS   "SSID Password"
 #define ID_PREFIX     "relay_box"
+
+const char* wlan_ssid;
+const char* wlan_pass;
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
@@ -19,14 +22,19 @@ MQTT_Controller mqtt_controller(espClient);
 #define MQTT_SERVER     "192.168.1.2"
 #define MQTT_PORT       "1883"
 
+void getWifiDetails();
+
 void connect_wifi()
 {
+  Serial.println("Getting WIiFi details...");
+  getWifiDetails();
+
   Serial.println("connecting wifi");
   Serial.print("ssid: ");
-  Serial.println(WLAN_SSID);
+  Serial.println(wlan_ssid);
   
   WiFi.mode(WIFI_STA);
-  WiFi.begin(WLAN_SSID, WLAN_PASS);
+  WiFi.begin(wlan_ssid, wlan_pass);
 
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -63,12 +71,37 @@ void callback(char* topic, char* payload, unsigned int length)
   // call MQTT_Controller callback   
 }
 
+void getWifiDetails()
+{
+  if (!LittleFS.begin())
+  {
+    Serial.println("unable to mount LittleFS");
+    return;
+  }
+
+  File f = LittleFS.open("/wifi_config.json", "r");
+  StaticJsonDocument<256> doc;
+
+  DeserializationError er = deserializeJson(doc, f);
+  if (er)
+  {
+    Serial.println("Failed to read wifi config file");
+    Serial.println(er.c_str());
+    f.close();
+    return;
+  }
+
+  wlan_ssid = doc["wlan_ssid"];
+  wlan_pass = doc["wlan_pass"];
+  
+}
+
 
 void setup() {
   Serial.begin(9600);
   Serial.println();
 
-  // connect_wifi();
+  connect_wifi();
 
   mqtt_controller.read_config();
   Serial.println("finished setup");

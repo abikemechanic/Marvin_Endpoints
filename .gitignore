@@ -5,3 +5,4 @@
 .vscode/ipch
 
 data/config.json
+data/wifi_config.json

@@ -9,7 +9,6 @@
 
 SpaceHeater::SpaceHeater(JsonObject config, PubSubClient* client)
 {
-    Serial.println("creating heater object");
     _controlPin = config["controlPin"];
     maxTemp = config["maxTemp"];
     minTemp = config["minTemp"];
@@ -39,7 +38,7 @@ SpaceHeater::SpaceHeater(JsonObject config, PubSubClient* client)
     }
 
     SubStruct s;
-    s.topic = config["temperature_sub_topic"];
+    s.topic = config["temperature_monitor_topic"];
     s.subModule = moduleID;
     subscriptions[_subCount+1] = s;
 }
@@ -59,6 +58,8 @@ void SpaceHeater::update()
 
         _lastUpdateTime = millis();
     }
+
+
 }
 
 void SpaceHeater::publish_message(char* topic, char* message)

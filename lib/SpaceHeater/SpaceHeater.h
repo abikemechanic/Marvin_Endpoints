@@ -25,6 +25,8 @@ public:
     int setMaxRunTime(int seconds);
     int setMinOffTime(int seconds);
 
+    bool state;
+
     int maxTemp;
     int minTemp;
     int maxRunTime;
@@ -40,7 +42,7 @@ public:
     const char* module_id;
 
 private:
-    bool localMonitor = true;
+    bool _localMonitor = true;
     int _controlPin;
     float historicalTemps[10];
     unsigned long _lastUpdateTime = 0;
